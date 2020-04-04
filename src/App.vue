@@ -1,32 +1,67 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
-</template>
+  <v-app>
+    <v-app-bar dark dense app extended color="primary">
+      <!-- using template with activator slot to activate tooltip on hover -->
+      <v-tooltip bottom color="primary--text white" transition="slide-x-reverse-transition">
+        <template v-slot:activator="{ on }">
+          <v-app-bar-nav-icon v-on="on" @click="drawer = !drawer">
+            <v-icon medium>mdi-format-list-bulleted</v-icon>
+          </v-app-bar-nav-icon>
+        </template>
+        <span>Click to open menu</span>
+      </v-tooltip>
+      <v-toolbar-title>
+        <span class="font-weight-bold">Activity Tracker</span>
+        <sub class="caption">
+          V-0.2
+          Alpha test
+        </sub>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-chip small color="grey lighten-4">
+        <v-btn icon color="green">
+          <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
+        </v-btn>
+        <v-btn icon color="error">
+          <v-icon>mdi-cancel</v-icon>
+        </v-btn>
+      </v-chip>
+      <!-- appbar-bottom-left-docked fab button-->
+      <template v-slot:extension>
+        <v-fab-transition>
+          <v-btn fab bottom absolute v-show="scrollAmount > 150" color="white primary--text">
+            <v-icon>mdi-plus</v-icon>
+          </v-btn>
+        </v-fab-transition>
+      </template>
+    </v-app-bar>
+    <v-navigation-drawer app v-model="drawer">
+      <NavBarList title="Overview" />
+    </v-navigation-drawer>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+    <v-content>
+      <!-- Listening to scrollChange event from Home component to toggle add button -->
+      <router-view @scrollChange="getValue"></router-view>
+    </v-content>
+  </v-app>
+</template> 
 
-#nav {
-  padding: 30px;
-}
+<script>
+import NavBarList from "@/components/NavBarList.vue";
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+export default {
+  name: "App",
 
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+  components: { NavBarList },
+
+  data: () => ({
+    scrollAmount: 0,
+    drawer: false
+  }),
+  methods: {
+    getValue(val) {
+      this.scrollAmount = val;
+    }
+  }
+};
+</script>
