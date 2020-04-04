@@ -65,3 +65,16 @@ export default {
   }
 };
 </script>
+<style>
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: grey;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(47, 109, 190);
+  border-radius: 15px;
+}
+</style>
