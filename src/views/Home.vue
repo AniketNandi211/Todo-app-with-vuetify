@@ -49,16 +49,16 @@
         </v-card>
       </v-col>
     </v-row>
-    <!-- vvv - 
+    <!-- vvv -    bottom FAB button 
     this parent container detects scroll event to handle the FAB buttons
     (App bar docked button as well via emiting an event) 
     -->
     <v-container fluid v-scroll="fabScroll">
-      <v-fab-transition>
+      <v-slide-y-reverse-transition>
         <v-btn fab dark bottom v-show="scrollAmount < 150" fixed right color="primary">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
-      </v-fab-transition>
+      </v-slide-y-reverse-transition>
       <!-- Component for display activities -->
       <ListView :items="listData" />
     </v-container>
