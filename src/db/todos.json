@@ -1,21 +1,62 @@
 {
-    "todos": [{
+    "pending": [{
             "id": 1,
             "title": "Yoga time",
             "desc": "Be healthy and take some time for a yoga session",
+            "time": "",
+            "date": "",
             "done": false
         },
         {
             "id": 2,
             "title": "Yoga time",
             "desc": "Be healthy and take some time for a yoga session",
+            "time": "",
+            "date": "",
             "done": false
         },
         {
             "id": 3,
             "title": "Yoga time",
             "desc": "Be healthy and take some time for a yoga session",
+            "time": "",
+            "date": "",
             "done": true
+        }
+    ],
+    "completed": [],
+    "aborted": [],
+    "types": [{
+            "id": 1,
+            "Gardening": "mdi-flower"
+        },
+        {
+            "id": 2,
+            "Workout": "mdi-dumbbell"
+        },
+        {
+            "id": 3,
+            "Music": "mdi-music"
+        },
+        {
+            "id": 4,
+            "Homework": "mdi-book-open-page-variant"
+        },
+        {
+            "id": 5,
+            "Driving": "mdi-car-sports"
+        },
+        {
+            "id": 6,
+            "Medicine": "mdi-medical-bag"
+        },
+        {
+            "id": 7,
+            "Shopping": "mdi-cart"
+        },
+        {
+            "id": 8,
+            "Exercise": "mdi-run"
         }
     ]
 }
