@@ -1,26 +1,38 @@
 {
     "pending": [{
             "id": 1,
-            "title": "Yoga time",
-            "desc": "Be healthy and take some time for a yoga session",
+            "title": "Morning Walk",
+            "desc": "Grab a water bottle and get on the streets, do some work out",
             "time": "",
             "date": "",
+            "icon": {
+                "font": "mdi-run",
+                "color": "cyan"
+            },
             "done": false
         },
         {
             "id": 2,
-            "title": "Yoga time",
-            "desc": "Be healthy and take some time for a yoga session",
+            "title": "Water the plants",
+            "desc": "look upon the plants in the backyard",
             "time": "",
             "date": "",
+            "icon": {
+                "font": "mdi-flower",
+                "color": "green"
+            },
             "done": false
         },
         {
             "id": 3,
-            "title": "Yoga time",
-            "desc": "Be healthy and take some time for a yoga session",
+            "title": "Mom's medicine",
+            "desc": "Buy some sugar tablets and painkillers from medical store",
             "time": "",
             "date": "",
+            "icon": {
+                "font": "mdi-medical-bag",
+                "color": "red"
+            },
             "done": true
         }
     ],

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar dark dense app extended color="primary">
+    <v-app-bar app dark dense extended color="primary">
       <!-- using template with activator slot to activate tooltip on hover -->
       <v-tooltip bottom color="primary--text white" transition="slide-x-reverse-transition">
         <template v-slot:activator="{ on }">
