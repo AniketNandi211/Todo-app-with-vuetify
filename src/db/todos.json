@@ -1,0 +1,21 @@
+{
+    "todos": [{
+            "id": 1,
+            "title": "Yoga time",
+            "desc": "Be healthy and take some time for a yoga session",
+            "done": false
+        },
+        {
+            "id": 2,
+            "title": "Yoga time",
+            "desc": "Be healthy and take some time for a yoga session",
+            "done": false
+        },
+        {
+            "id": 3,
+            "title": "Yoga time",
+            "desc": "Be healthy and take some time for a yoga session",
+            "done": true
+        }
+    ]
+}
