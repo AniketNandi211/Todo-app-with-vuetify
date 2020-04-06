@@ -1,74 +1,74 @@
 {
-    "pending": [{
-            "id": 1,
-            "title": "Morning Walk",
-            "desc": "Grab a water bottle and get on the streets, do some work out",
-            "time": "",
-            "date": "",
-            "icon": {
-                "font": "mdi-run",
-                "color": "cyan"
-            },
-            "done": false
-        },
-        {
-            "id": 2,
-            "title": "Water the plants",
-            "desc": "look upon the plants in the backyard",
-            "time": "",
-            "date": "",
-            "icon": {
-                "font": "mdi-flower",
-                "color": "green"
-            },
-            "done": false
-        },
-        {
-            "id": 3,
-            "title": "Mom's medicine",
-            "desc": "Buy some sugar tablets and painkillers from medical store",
-            "time": "",
-            "date": "",
-            "icon": {
-                "font": "mdi-medical-bag",
-                "color": "red"
-            },
-            "done": true
-        }
-    ],
-    "completed": [],
-    "aborted": [],
-    "types": [{
-            "id": 1,
-            "Gardening": "mdi-flower"
-        },
-        {
-            "id": 2,
-            "Workout": "mdi-dumbbell"
-        },
-        {
-            "id": 3,
-            "Music": "mdi-music"
-        },
-        {
-            "id": 4,
-            "Homework": "mdi-book-open-page-variant"
-        },
-        {
-            "id": 5,
-            "Driving": "mdi-car-sports"
-        },
-        {
-            "id": 6,
-            "Medicine": "mdi-medical-bag"
-        },
-        {
-            "id": 7,
-            "Shopping": "mdi-cart"
-        },
-        {
-            "id": 8,
-            "Exercise": "mdi-run"
-        }
-    ]
+  "pending": [{
+      "id": 1,
+      "title": "Morning Walk",
+      "desc": "Grab a water bottle and get on the streets, do some work out",
+      "time": "NA",
+      "date": "NA",
+      "icon": {
+        "font": "mdi-run",
+        "color": "blue"
+      },
+      "done": false
+    },
+    {
+      "id": 2,
+      "title": "Gardening",
+      "desc": "Water the plants in the backyard and cut out extra grasses",
+      "time": "NA",
+      "date": "NA",
+      "icon": {
+        "font": "mdi-flower",
+        "color": "green"
+      },
+      "done": false
+    },
+    {
+      "id": 3,
+      "title": "Mom's medicine",
+      "desc": "Buy some sugar tablets and painkillers from medical store",
+      "time": "NA",
+      "date": "NA",
+      "icon": {
+        "font": "mdi-medical-bag",
+        "color": "red"
+      },
+      "done": false
+    }
+  ],
+  "completed": [],
+  "aborted": [],
+  "types": [{
+      "id": 1,
+      "Gardening": "mdi-flower"
+    },
+    {
+      "id": 2,
+      "Workout": "mdi-dumbbell"
+    },
+    {
+      "id": 3,
+      "Music": "mdi-music"
+    },
+    {
+      "id": 4,
+      "Homework": "mdi-book-open-page-variant"
+    },
+    {
+      "id": 5,
+      "Driving": "mdi-car-sports"
+    },
+    {
+      "id": 6,
+      "Medicine": "mdi-medical-bag"
+    },
+    {
+      "id": 7,
+      "Shopping": "mdi-cart"
+    },
+    {
+      "id": 8,
+      "Exercise": "mdi-run"
+    }
+  ]
 }

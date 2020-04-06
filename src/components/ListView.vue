@@ -1,27 +1,37 @@
 <template>
   <v-container fluid class="pa-1">
-    <v-list three-line subheader elevation="0" class="grey lighten-5">
+    <v-list three-line subheader shaped elevation="0" class="grey lighten-5">
       <v-subheader class="font-weight-black ml-1">Manage your activities</v-subheader>
       <!-- comment to be inserted -->
       <v-slide-x-transition group>
         <v-hover v-slot:default="{hover}" v-for="(item, index) in items" :key="index">
-          <v-list-item :ripple="true">
+          <v-list-item :ripple="true" class="my-1" :class="{'success lighten-5' : item.done}">
             <v-list-item-icon>
               <v-avatar class="success">
                 <v-icon
-                  class="white lighten-4"
-                  :class="`${item.icon.color}--text`"
+                  class="white"
+                  :color="`${item.icon.color}`"
+                  :class="{'success lighten-4' : item.done, 'success--text' : item.done}"
                 >{{item.icon.font}}</v-icon>
               </v-avatar>
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title class="mt-n1">{{item.title}}</v-list-item-title>
-              <v-list-item-subtitle class="mt-0 ml-1">{{item.desc}}</v-list-item-subtitle>
+              <v-list-item-title class="mt-n1" :class="{'success--text' : item.done}">{{item.title}}</v-list-item-title>
+              <v-list-item-subtitle
+                class="mt-0 ml-1"
+                :class="{'success--text' : item.done}"
+              >{{item.desc}}</v-list-item-subtitle>
             </v-list-item-content>
             <v-list-item-action>
-              <v-row align="center">
+              <v-row align="center" class="mt-2">
                 <v-slide-y-transition>
-                  <v-btn icon v-show="hover" color="success">
+                  <v-btn
+                    icon
+                    color="success"
+                    :loading="item.done"
+                    v-show="hover && !item.done"
+                    @click="completeItem(item.id)"
+                  >
                     <v-icon v-show="hover">mdi-checkbox-marked-circle</v-icon>
                   </v-btn>
                 </v-slide-y-transition>
@@ -40,12 +50,34 @@
   </v-container>
 </template>
 <script>
+import axios from "axios";
 export default {
   props: ["items"],
   data: () => ({
     //
   }),
   methods: {
+    async completeItem(t_id) {
+      this.items[t_id - 1].done = true;
+      const { id, title, desc, icon, time, date, done } = this.items[t_id - 1];
+      try {
+        const res = await axios.put(`http://localhost:3000/pending/${t_id}`, {
+          id: id,
+          title: title,
+          desc: desc,
+          time: time,
+          date: date,
+          icon: icon,
+          done: done
+        });
+        this.$emit("taskStateChanged", id);
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  },
+  computed: {
     //
   }
 };

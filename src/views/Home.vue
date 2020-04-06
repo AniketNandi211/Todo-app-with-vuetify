@@ -11,16 +11,21 @@
             <span class="success--text">Don't forget to water the plants</span>
           </v-card-subtitle>
           <v-card-text class="text-right mt-n4">
-            <v-progress-circular class="mr-6" size="70" :value="progress" rotate="-180">
-              <span class="font-weight-bold">0 of {{pendingTasks}}</span>
+            <v-progress-circular
+              class="mr-6 success--text"
+              size="70"
+              :value="progression"
+              rotate="-180"
+            >
+              <span class="font-weight-bold">{{completedTasks}} of {{taskCount}}</span>
             </v-progress-circular>
             <br />
             <!-- <div class="mt-1 mr-8 primary--text">status</div>  -->
           </v-card-text>
           <v-card-text class="mt-n8">
-            <div class="font-weight-bold mb-2 primary--text">Great, You are almost there</div>
+            <div class="font-weight-bold ml-2 mb-4 primary--text">Great, You are almost there</div>
             <v-chip :ripple="true" outlined color="success">
-              <span class="ml-1">2 completed</span>
+              <span class="ml-1">{{completedTasks}} completed</span>
               <v-icon small class="ml-2">mdi-checkbox-marked-circle-outline</v-icon>
             </v-chip>
             <v-chip :ripple="true" outlined class="mx-1 my-1" color="warning">
@@ -29,7 +34,7 @@
             </v-chip>
             <v-chip :ripple="true" outlined class="mx-0" color="error">
               <v-icon small class="mr-1">mdi-cancel</v-icon>
-              <span class="ml-1">2 Aborted</span>
+              <span class="ml-1">{{abortedTasks}} Aborted</span>
             </v-chip>
           </v-card-text>
         </v-card>
@@ -46,7 +51,7 @@
         </v-btn>
       </v-slide-y-reverse-transition>
       <!-- Component for display activities -->
-      <ListView :items="listData" />
+      <ListView :items="listData" @taskStateChanged="completeTask" />
     </v-container>
   </div>
 </template>
@@ -61,7 +66,7 @@ export default {
   data: () => ({
     scrollAmount: window.scrollY,
     username: "LoneStar",
-    progress: 0,
+    completeCount: 0,
     progressColor: "success",
     listData: []
   }),
@@ -69,14 +74,17 @@ export default {
   created: async function() {
     let todos = [];
     try {
-      let res = await axios.get("http://localhost:3000/pending");
+      const res = await axios.get("http://localhost:3000/pending");
       todos = res.data;
-      todos.map(({ title, desc, done, icon }) => {
+      todos.map(({ id, title, desc, done, icon, time, date }) => {
         this.listData.push({
+          id: id,
           title: title,
           desc: desc,
           done: done,
-          icon: icon
+          icon: icon,
+          time: time,
+          date: date
         });
       });
     } catch (err) {
@@ -87,23 +95,30 @@ export default {
     fabScroll() {
       this.scrollAmount = window.scrollY;
       this.$emit("scrollChange", this.scrollAmount);
+    },
+    completeTask(/* completedTaskId */) {
+      this.completeCount++;
     }
   },
   computed: {
-    pendingTasks() {
+    taskCount() {
       return this.listData.length;
+    },
+    pendingTasks() {
+      return this.listData.length - this.completeCount;
+    },
+    completedTasks() {
+      return this.completeCount;
+    },
+    progression() {
+      return Math.floor((this.completeCount / this.listData.length) * 100);
+    },
+    abortedTasks() {
+      return 0; // this.aborted.length
     }
   }
 };
 </script>
 
 <style scoped>
-.myfab {
-  transform: translateY(-60px);
-  transition: all 500ms ease-in-out;
-}
-.myfab:hover {
-  transform: scale(0);
-  color: aliceblue;
-}
 </style>

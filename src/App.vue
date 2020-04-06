@@ -13,8 +13,8 @@
       <v-toolbar-title>
         <span class="font-weight-bold">Activity Tracker</span>
         <sub class="caption">
-          V-0.2
-          Alpha test
+          V-0.6
+          Beta test
         </sub>
       </v-toolbar-title>
       <v-spacer></v-spacer>
