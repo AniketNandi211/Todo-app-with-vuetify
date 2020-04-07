@@ -2,7 +2,7 @@
   <div class="home">
     <v-row class="mx-1">
       <v-col cols="12">
-        <v-card elevation="2" tile class="pa-1">
+        <v-card elevation="2" tile class="pa-1" v-ripple="{class : 'cyan--text'}">
           <v-card-title class="mt-1 primary--text" style="word-break: normal">
             <!-- word-break for applying word wrap -->
             Hey {{username}}, what are you up to today?
@@ -51,14 +51,13 @@
         </v-btn>
       </v-slide-y-reverse-transition>
       <!-- Component for display activities -->
-      <ListView :items="listData" @taskStateChanged="completeTask" />
+      <ListView @dataLoaded="updateStatus" @taskStateChanged="taskDone" @itemDeleted="taskAborted" />
     </v-container>
   </div>
 </template>
 
 <script>
 import ListView from "@/components/ListView.vue";
-import axios from "axios";
 
 export default {
   name: "Home",
@@ -67,54 +66,43 @@ export default {
     scrollAmount: window.scrollY,
     username: "LoneStar",
     completeCount: 0,
-    progressColor: "success",
-    listData: []
+    pendingCount: 0,
+    totalCount: 0,
+    abortedCount: 0,
+    progressColor: "success"
   }),
-  // Created Life cycle hook
-  created: async function() {
-    let todos = [];
-    try {
-      const res = await axios.get("http://localhost:3000/pending");
-      todos = res.data;
-      todos.map(({ id, title, desc, done, icon, time, date }) => {
-        this.listData.push({
-          id: id,
-          title: title,
-          desc: desc,
-          done: done,
-          icon: icon,
-          time: time,
-          date: date
-        });
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  },
   methods: {
     fabScroll() {
       this.scrollAmount = window.scrollY;
       this.$emit("scrollChange", this.scrollAmount);
     },
-    completeTask(/* completedTaskId */) {
+    updateStatus({ complete, total }) {
+      this.completeCount = complete;
+      this.totalCount = total;
+    },
+    taskDone(/* task_id */) {
       this.completeCount++;
+    },
+    taskAborted(/* task_id */) {
+      this.abortedCount++;
+      this.completeCount--;
     }
   },
   computed: {
-    taskCount() {
-      return this.listData.length;
-    },
-    pendingTasks() {
-      return this.listData.length - this.completeCount;
-    },
     completedTasks() {
       return this.completeCount;
     },
+    pendingTasks() {
+      return this.totalCount - this.completeCount;
+    },
+    taskCount() {
+      return this.totalCount;
+    },
     progression() {
-      return Math.floor((this.completeCount / this.listData.length) * 100);
+      return Math.floor((this.completeCount / this.totalCount) * 100);
     },
     abortedTasks() {
-      return 0; // this.aborted.length
+      return this.abortedCount;
     }
   }
 };

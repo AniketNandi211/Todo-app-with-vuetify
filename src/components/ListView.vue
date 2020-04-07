@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-1">
-    <v-list three-line subheader shaped elevation="0" class="grey lighten-5">
+    <v-list three-line subheader shaped elevation="0" class="grey lighten-4">
       <v-subheader class="font-weight-black ml-1">Manage your activities</v-subheader>
       <!-- comment to be inserted -->
       <v-slide-x-transition group>
@@ -11,7 +11,7 @@
                 <v-icon
                   class="white"
                   :color="`${item.icon.color}`"
-                  :class="{'success lighten-4' : item.done, 'success--text' : item.done}"
+                  :class="{'success lighten-4 success--text' : item.done}"
                 >{{item.icon.font}}</v-icon>
               </v-avatar>
             </v-list-item-icon>
@@ -30,14 +30,20 @@
                     color="success"
                     :loading="item.done"
                     v-show="hover && !item.done"
-                    @click="completeItem(item.id)"
+                    @click="completeItem(item.id, index)"
                   >
                     <v-icon v-show="hover">mdi-checkbox-marked-circle</v-icon>
                   </v-btn>
                 </v-slide-y-transition>
 
                 <v-slide-x-reverse-transition>
-                  <v-btn v-show="hover" icon color="error" :loading="false">
+                  <v-btn
+                    v-show="hover"
+                    icon
+                    color="error"
+                    :loading="item.delete"
+                    @click="deleteItem(item.id, index)"
+                  >
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </v-slide-x-reverse-transition>
@@ -52,16 +58,68 @@
 <script>
 import axios from "axios";
 export default {
-  props: ["items"],
   data: () => ({
-    //
+    items: []
   }),
+  created: function() {
+    this.loadlist();
+  },
   methods: {
-    async completeItem(t_id) {
-      this.items[t_id - 1].done = true;
-      const { id, title, desc, icon, time, date, done } = this.items[t_id - 1];
+    async loadlist() {
+      this.items = [];
       try {
-        const res = await axios.put(`http://localhost:3000/pending/${t_id}`, {
+        const res = await axios.get("http://localhost:3000/pending/");
+        res.data.map(({ id, title, desc, icon, time, date, done }) => {
+          this.items.push({
+            id: id,
+            title: title,
+            desc: desc,
+            time: time,
+            date: date,
+            icon: icon,
+            done: done,
+            delete: false
+          });
+        });
+        let complete = 0,
+          total = res.data.length;
+        res.data.map(({ done }) => {
+          if (done === true) {
+            complete++;
+          }
+        });
+        this.$emit("dataLoaded", { complete: complete, total: total });
+      } catch (error) {
+        alert("Couldn't load data from the database");
+      }
+    },
+    async completeItem(task_id, index) {
+      this.items[index].done = true;
+      const { id, title, desc, icon, time, date, done } = this.items[index];
+      try {
+        const res = await axios.put(
+          `http://localhost:3000/pending/${task_id}`,
+          {
+            id: id,
+            title: title,
+            desc: desc,
+            time: time,
+            date: date,
+            icon: icon,
+            done: done
+          }
+        );
+        this.$emit("taskStateChanged", id);
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async deleteItem(task_id, index) {
+      this.items[index].delete = true;
+      const { id, title, desc, icon, time, date, done } = this.items[index];
+      try {
+        const res = axios.post("http://localhost:3000/aborted", {
           id: id,
           title: title,
           desc: desc,
@@ -70,10 +128,13 @@ export default {
           icon: icon,
           done: done
         });
-        this.$emit("taskStateChanged", id);
         console.log(res.data);
-      } catch (err) {
-        console.log(err);
+        await axios.delete(`http://localhost:3000/pending/${task_id}`);
+        this.$emit("itemDeleted", task_id);
+        this.items[index].delete = false;
+        this.loadlist();
+      } catch (error) {
+        console.log(error);
       }
     }
   },
