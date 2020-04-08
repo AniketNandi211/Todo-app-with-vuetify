@@ -1,6 +1,22 @@
 <template>
   <v-app>
-    <v-app-bar app flat dark dense extended color="primary">
+    <v-app-bar
+      app
+      shrink-on-scroll
+      flat
+      prominent
+      dark
+      dense
+      extended
+      color="primary"
+      height="120"
+      fade-img-on-scroll
+      src="@/assets/work.jpg"
+    >
+      <template v-slot:img="{ props }">
+        <v-img v-bind="props" gradient="to bottom right, rgba(0,0,255,.5), rgba(0,255,255,.6)"></v-img>
+      </template>
+
       <!-- using template with activator slot to activate tooltip on hover -->
       <v-tooltip bottom color="primary--text white" transition="slide-x-reverse-transition">
         <template v-slot:activator="{ on }">
@@ -13,23 +29,21 @@
       <v-toolbar-title>
         <span class="font-weight-bold">Activity Tracker</span>
         <sub class="caption">
-          V-0.6
+          V-0.7
           Beta test
         </sub>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-chip small color="grey lighten-4">
-        <v-btn icon color="green">
-          <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
-        </v-btn>
-        <v-btn icon color="error">
-          <v-icon>mdi-cancel</v-icon>
-        </v-btn>
-      </v-chip>
+      <v-btn icon>
+        <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
+      </v-btn>
+      <v-btn icon>
+        <v-icon>mdi-export</v-icon>
+      </v-btn>
       <!-- appbar-bottom-left-docked fab button-->
       <template v-slot:extension>
         <v-fab-transition>
-          <v-btn fab bottom absolute v-show="scrollAmount > 150" color="white primary--text">
+          <v-btn fab bottom absolute v-show="scrollAmount > 130" color="white primary--text">
             <v-icon>mdi-plus</v-icon>
           </v-btn>
         </v-fab-transition>
@@ -39,7 +53,7 @@
       <NavBarList title="Overview" />
     </v-navigation-drawer>
 
-    <v-content>
+    <v-content class="grey lighten-3">
       <!-- Listening to scrollChange event from Home component to toggle add button -->
       <router-view @scrollChange="getValue"></router-view>
     </v-content>

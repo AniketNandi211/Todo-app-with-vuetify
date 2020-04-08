@@ -1,5 +1,29 @@
 {
   "pending": [{
+      "id": 2,
+      "title": "Gym",
+      "desc": "You have your gym class on 4 pm , Don't late",
+      "time": "NA",
+      "date": "NA",
+      "icon": {
+        "font": "mdi-dumbbell",
+        "color": "indigo"
+      },
+      "done": true
+    },
+    {
+      "id": 7,
+      "title": "Shooping",
+      "desc": "Do groceries as well as buy soya sauce and meat",
+      "time": "NA",
+      "date": "NA",
+      "icon": {
+        "font": "mdi-cart",
+        "color": "blue"
+      },
+      "done": false
+    },
+    {
       "id": 1,
       "title": "Morning Walk",
       "desc": "Grab a bottle of water and get on the streets, do some work out",
@@ -12,37 +36,13 @@
       "done": false
     },
     {
-      "id": 3,
-      "title": "Gardening",
-      "desc": "Water the plants and pluck the flowers",
+      "id": 6,
+      "title": "Driving practice",
+      "desc": "Don't forget to hit the gas, your driving license test is ahead",
       "time": "NA",
       "date": "NA",
       "icon": {
-        "font": "mdi-flower",
-        "color": "green"
-      },
-      "done": false
-    },
-    {
-      "id": 2,
-      "title": "Gym",
-      "desc": "You have your gym class on 4 pm , Don't late",
-      "time": "NA",
-      "date": "NA",
-      "icon": {
-        "font": "mdi-dumbbell",
-        "color": "indigo"
-      },
-      "done": false
-    },
-    {
-      "id": 4,
-      "title": "Medicine",
-      "desc": "Buy some painkillers",
-      "time": "NA",
-      "date": "NA",
-      "icon": {
-        "font": "mdi-medical-bag",
+        "font": "mdi-car-sports",
         "color": "red"
       },
       "done": false
@@ -60,26 +60,26 @@
       "done": false
     },
     {
-      "id": 6,
-      "title": "Driving practice",
-      "desc": "Don't forget to hit the gas, your driving license test is ahead",
+      "id": 3,
+      "title": "Gardening",
+      "desc": "Water the plants and pluck the flowers",
       "time": "NA",
       "date": "NA",
       "icon": {
-        "font": "mdi-car-sports",
-        "color": "red"
+        "font": "mdi-flower",
+        "color": "green"
       },
       "done": false
     },
     {
-      "id": 7,
-      "title": "Shooping",
-      "desc": "Do groceries as well as buy soya sauce and meat",
+      "id": 4,
+      "title": "Medicine",
+      "desc": "Buy some painkillers",
       "time": "NA",
       "date": "NA",
       "icon": {
-        "font": "mdi-cart",
-        "color": "blue"
+        "font": "mdi-medical-bag",
+        "color": "red"
       },
       "done": false
     }

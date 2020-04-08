@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid class="pa-1">
-    <v-list three-line subheader shaped elevation="0" class="grey lighten-4">
+  <v-container fluid class="pa-1 mt-n2">
+    <v-list three-line subheader shaped elevation="0" class="grey lighten-5">
       <v-subheader class="font-weight-black ml-1">Manage your activities</v-subheader>
       <!-- comment to be inserted -->
       <v-slide-x-transition group>
@@ -41,8 +41,7 @@
                     v-show="hover"
                     icon
                     color="error"
-                    :loading="item.delete"
-                    @click="deleteItem(item.id, index)"
+                    @click="confirmDeleteion(item.id, index)"
                   >
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
@@ -53,18 +52,61 @@
         </v-hover>
       </v-slide-x-transition>
     </v-list>
+    <!-- error conformation dialogue box -->
+    <v-dialog
+      v-model="dialog"
+      persistent
+      :overlay="false"
+      max-width="400px"
+      dense
+      transition="dialog-transition"
+    >
+      <v-card>
+        <v-card-title class="error--text">Are you sure!</v-card-title>
+        <v-card-text>You want to delete the following task</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            dark
+            depressed
+            :loading="del"
+            color="error"
+            @click="deleteItem(deleteId, deletindex)"
+          >Delete</v-btn>
+          <v-btn outlined depressed color="error" @click="dialog = false">Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <!-- snackbar -->
+    <v-snackbar color="error" class="white--text" v-model="snackbar" :timeout="2500">
+      1 Item deleted
+      <v-btn outlined class="error white--text" @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 <script>
 import axios from "axios";
+
 export default {
+  name: "ListView",
+  components: {},
   data: () => ({
-    items: []
+    items: [],
+    dialog: false,
+    deleteId: -1,
+    deletindex: -1,
+    del: false,
+    snackbar: false
   }),
   created: function() {
     this.loadlist();
   },
   methods: {
+    confirmDeleteion(task_id, index) {
+      this.dialog = true;
+      this.deleteId = task_id;
+      this.deletindex = index;
+    },
     async loadlist() {
       this.items = [];
       try {
@@ -77,10 +119,10 @@ export default {
             time: time,
             date: date,
             icon: icon,
-            done: done,
-            delete: false
+            done: done
           });
         });
+        const ab_res = await axios.get("http://localhost:3000/aborted/");
         let complete = 0,
           total = res.data.length;
         res.data.map(({ done }) => {
@@ -88,7 +130,11 @@ export default {
             complete++;
           }
         });
-        this.$emit("dataLoaded", { complete: complete, total: total });
+        this.$emit("dataLoaded", {
+          complete: complete,
+          total: total,
+          abort: ab_res.data.length
+        });
       } catch (error) {
         alert("Couldn't load data from the database");
       }
@@ -116,7 +162,7 @@ export default {
       }
     },
     async deleteItem(task_id, index) {
-      this.items[index].delete = true;
+      this.del = true;
       const { id, title, desc, icon, time, date, done } = this.items[index];
       try {
         const res = axios.post("http://localhost:3000/aborted", {
@@ -131,8 +177,10 @@ export default {
         console.log(res.data);
         await axios.delete(`http://localhost:3000/pending/${task_id}`);
         this.$emit("itemDeleted", task_id);
-        this.items[index].delete = false;
+        this.dialog = false;
+        this.del = false;
         this.loadlist();
+        this.snackbar = true;
       } catch (error) {
         console.log(error);
       }

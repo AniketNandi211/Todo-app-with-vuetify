@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <v-row class="mx-1">
+    <v-row class="mx-0">
       <v-col cols="12">
-        <v-card elevation="2" tile class="pa-1" v-ripple="{class : 'cyan--text'}">
+        <v-card elevation="2" class="pa-1" v-ripple="{class : 'cyan--text'}">
           <v-card-title class="mt-1 primary--text" style="word-break: normal">
             <!-- word-break for applying word wrap -->
             Hey {{username}}, what are you up to today?
@@ -46,7 +46,7 @@
     -->
     <v-container fluid v-scroll="fabScroll">
       <v-slide-y-reverse-transition>
-        <v-btn fab dark bottom v-show="scrollAmount < 150" fixed right color="primary">
+        <v-btn fab dark bottom v-show="scrollAmount < 130" fixed right color="primary">
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </v-slide-y-reverse-transition>
@@ -76,9 +76,10 @@ export default {
       this.scrollAmount = window.scrollY;
       this.$emit("scrollChange", this.scrollAmount);
     },
-    updateStatus({ complete, total }) {
+    updateStatus({ complete, total, abort }) {
       this.completeCount = complete;
       this.totalCount = total;
+      this.abortedCount = abort;
     },
     taskDone(/* task_id */) {
       this.completeCount++;
