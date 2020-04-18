@@ -7,23 +7,30 @@
             <!-- word-break for applying word wrap -->
             Hey {{username}}, what are you up to today?
           </v-card-title>
-          <v-card-subtitle class="mt-1 ml-2 primary--text">
-            <span class="success--text">Don't forget to water the plants</span>
+          <v-card-subtitle class="mt-1 ml-2">
+            <v-icon color="cyan" x-large>mdi-weather-night</v-icon>
+            <span class="primary--text">Night sky, 28&deg;C</span>
           </v-card-subtitle>
           <v-card-text class="text-right mt-n4">
             <v-progress-circular
-              class="mr-6 success--text"
+              class="mr-6"
+              :class="progressionStyle"
               size="70"
               :value="progression"
               rotate="-180"
             >
-              <span class="font-weight-bold">{{completedTasks}} of {{taskCount}}</span>
+              <span class="font-weight-bold" style="transition : all 200ms">
+                <span :class="progressionStyle">{{completedTasks}}</span>
+                of {{taskCount}}
+              </span>
             </v-progress-circular>
             <br />
             <!-- <div class="mt-1 mr-8 primary--text">status</div>  -->
           </v-card-text>
           <v-card-text class="mt-n8">
-            <div class="font-weight-bold ml-2 mb-4 primary--text">Great, You are almost there</div>
+            <div
+              class="font-weight-bold ml-2 mb-4 primary--text"
+            >Perfect weather for a small walk around</div>
             <v-chip :ripple="true" outlined color="success">
               <span class="ml-1">{{completedTasks}} completed</span>
               <v-icon small class="ml-2">mdi-checkbox-marked-circle-outline</v-icon>
@@ -64,12 +71,12 @@ export default {
   components: { ListView },
   data: () => ({
     scrollAmount: window.scrollY,
-    username: "LoneStar",
+    username: "Aniket",
     completeCount: 0,
     pendingCount: 0,
     totalCount: 0,
     abortedCount: 0,
-    progressColor: "success"
+    progressPerc: 0
   }),
   methods: {
     fabScroll() {
@@ -104,6 +111,18 @@ export default {
     },
     abortedTasks() {
       return this.abortedCount;
+    },
+    progressionStyle() {
+      let perc = Math.floor((this.completeCount / this.totalCount) * 100);
+      if (perc === 0) {
+        return { "error--text": true };
+      } else if (perc > 0 && perc <= 20) {
+        return { "orange--text": true };
+      } else if (perc > 20 && perc <= 80) {
+        return { "primary--text": true };
+      } else {
+        return { "success--text": true };
+      }
     }
   }
 };

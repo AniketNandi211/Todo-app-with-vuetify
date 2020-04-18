@@ -1,6 +1,6 @@
 <template>
   <v-container fluid class="pa-1 mt-n2">
-    <v-list three-line subheader shaped elevation="0" class="grey lighten-5">
+    <v-list three-line subheader shaped elevation="3">
       <v-subheader class="font-weight-black ml-1">Manage your activities</v-subheader>
       <!-- comment to be inserted -->
       <v-slide-x-transition group>
@@ -43,7 +43,7 @@
                     color="error"
                     @click="confirmDeleteion(item.id, index)"
                   >
-                    <v-icon>mdi-delete</v-icon>
+                    <v-icon>mdi-close-circle</v-icon>
                   </v-btn>
                 </v-slide-x-reverse-transition>
               </v-row>
@@ -78,8 +78,8 @@
       </v-card>
     </v-dialog>
     <!-- snackbar -->
-    <v-snackbar color="error" class="white--text" v-model="snackbar" :timeout="2500">
-      1 Item deleted
+    <v-snackbar color=" error" class="white--text" v-model="snackbar" :timeout="2500">
+      1 task deleted
       <v-btn outlined class="error white--text" @click="snackbar = false">Close</v-btn>
     </v-snackbar>
   </v-container>
@@ -92,11 +92,11 @@ export default {
   components: {},
   data: () => ({
     items: [],
-    dialog: false,
+    dialog: false, // for dialogue box
     deleteId: -1,
     deletindex: -1,
-    del: false,
-    snackbar: false
+    del: false, // for dialogue's delete button loading  animation
+    snackbar: false // for snackbar prompt handling
   }),
   created: function() {
     this.loadlist();
@@ -164,21 +164,25 @@ export default {
     async deleteItem(task_id, index) {
       this.del = true;
       const { id, title, desc, icon, time, date, done } = this.items[index];
+      const obj = {
+        id: id,
+        title: title,
+        desc: desc,
+        time: time,
+        date: date,
+        icon: icon,
+        done: done
+      };
       try {
-        const res = axios.post("http://localhost:3000/aborted", {
-          id: id,
-          title: title,
-          desc: desc,
-          time: time,
-          date: date,
-          icon: icon,
-          done: done
-        });
-        console.log(res.data);
-        await axios.delete(`http://localhost:3000/pending/${task_id}`);
-        this.$emit("itemDeleted", task_id);
+        if (this.items[index].done === true) {
+          await axios.post("http://localhost:3000/completed", obj);
+        } else {
+          axios.post("http://localhost:3000/aborted", obj);
+          this.$emit("itemDeleted", task_id);
+        }
         this.dialog = false;
         this.del = false;
+        await axios.delete(`http://localhost:3000/pending/${task_id}`);
         this.loadlist();
         this.snackbar = true;
       } catch (error) {

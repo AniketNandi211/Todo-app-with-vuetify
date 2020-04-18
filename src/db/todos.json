@@ -1,15 +1,28 @@
 {
-  "pending": [{
-      "id": 2,
-      "title": "Gym",
-      "desc": "You have your gym class on 4 pm , Don't late",
+  "pending": [
+    {
+      "id": 5,
+      "title": "Homework",
+      "desc": "Math howeworks - integration by parts (SET-2) and Modern Calculus (SET 4)",
       "time": "NA",
       "date": "NA",
       "icon": {
-        "font": "mdi-dumbbell",
-        "color": "indigo"
+        "font": "mdi-book-open-page-variant",
+        "color": "orange"
       },
       "done": true
+    },
+    {
+      "id": 3,
+      "title": "Gardening",
+      "desc": "Water the plants",
+      "time": "NA",
+      "date": "NA",
+      "icon": {
+        "font": "mdi-flower",
+        "color": "green"
+      },
+      "done": false
     },
     {
       "id": 7,
@@ -19,18 +32,6 @@
       "date": "NA",
       "icon": {
         "font": "mdi-cart",
-        "color": "blue"
-      },
-      "done": false
-    },
-    {
-      "id": 1,
-      "title": "Morning Walk",
-      "desc": "Grab a bottle of water and get on the streets, do some work out",
-      "time": "NA",
-      "date": "NA",
-      "icon": {
-        "font": "mdi-run",
         "color": "blue"
       },
       "done": false
@@ -48,30 +49,6 @@
       "done": false
     },
     {
-      "id": 5,
-      "title": "Homework",
-      "desc": "Math howeworks - integration by parts (SET-2) and Modern Calculus (SET 4)",
-      "time": "NA",
-      "date": "NA",
-      "icon": {
-        "font": "mdi-book-open-page-variant",
-        "color": "orange"
-      },
-      "done": false
-    },
-    {
-      "id": 3,
-      "title": "Gardening",
-      "desc": "Water the plants and pluck the flowers",
-      "time": "NA",
-      "date": "NA",
-      "icon": {
-        "font": "mdi-flower",
-        "color": "green"
-      },
-      "done": false
-    },
-    {
       "id": 4,
       "title": "Medicine",
       "desc": "Buy some painkillers",
@@ -84,9 +61,36 @@
       "done": false
     }
   ],
-  "completed": [],
-  "aborted": [],
-  "types": [{
+  "completed": [
+    {
+      "id": 1,
+      "title": "Morning Walk",
+      "desc": "Grab a bottle of water and get on the streets, do some work out",
+      "time": "NA",
+      "date": "NA",
+      "icon": {
+        "font": "mdi-run",
+        "color": "blue"
+      },
+      "done": true
+    }
+  ],
+  "aborted": [
+    {
+      "id": 2,
+      "title": "Gym",
+      "desc": "You have your gym class on 4 pm , Don't late",
+      "time": "NA",
+      "date": "NA",
+      "icon": {
+        "font": "mdi-dumbbell",
+        "color": "indigo"
+      },
+      "done": false
+    }
+  ],
+  "types": [
+    {
       "id": 1,
       "Gardening": "mdi-flower"
     },

@@ -29,11 +29,12 @@
       <v-toolbar-title>
         <span class="font-weight-bold">Activity Tracker</span>
         <sub class="caption">
-          V-0.7
+          V-0.8
           Beta test
         </sub>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <!-- Just for visual, nothing functional -->
       <v-btn icon>
         <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
       </v-btn>
@@ -81,7 +82,7 @@ export default {
 </script>
 <style>
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
 }
 ::-webkit-scrollbar-track {
   background: grey;
